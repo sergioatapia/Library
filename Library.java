@@ -96,7 +96,17 @@ class Librarian {
     public void setEmail(String email) {
         this.email = email;
     }
-  }
+    
+    // Override toString() method to display librarian information
+    @Override
+    public String toString() {
+        return "Librarian {" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", email='" + email + '\'' +
+                '}';
+    }
+}
 
 
 // User class represents a normal user that is not a librarian
