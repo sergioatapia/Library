@@ -1,3 +1,8 @@
+/* Library Management System
+ * Author: Sergio Alvarez Tapia
+ * Created: Mar, 2023
+ */
+
 import java.util.ArrayList;
 import java.util.Scanner;
 
