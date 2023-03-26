@@ -51,31 +51,55 @@ class Book {
 
 // Librarian class represents a librarian with corresponding authorizations
 class Librarian {
-    private int id;
-    private String name;
-    private String email;
+  private int id;
+  private String name;
+  private String email;
 
-    public Librarian(int id, String name, String email) {
-        this.id = id;
-        this.name = name;
-        this.email = email;
-    }
+  public Librarian(int id, String name, String email) {
+      this.id = id;
+      this.name = name;
+      this.email = email;
+  }
   
+  // Getters and setters for librarian information
+  public int getId() {
+      return id;
+  }
+
+  public void setId(int id) {
+      this.id = id;
+  }
+
+  public String getName() {
+      return name;
+  }
+
+  public void setName(String name) {
+      this.name = name;
+  }
+
+  public String getEmail() {
+      return email;
+  }
+
+  public void setEmail(String email) {
+      this.email = email;
+  }
 }
 
 
 // User class represents a normal user that is not a librarian
 class User {
-    private int id;
-    private String name;
-    private String email;
-    private ArrayList<Book> borrowedBooks;
+  private int id;
+  private String name;
+  private String email;
+  private ArrayList<Book> borrowedBooks;
 
-    public User(int id, String name, String email) {
-        this.id = id;
-        this.name = name;
-        this.email = email;
-        borrowedBooks = new ArrayList<>();
-    }
+  public User(int id, String name, String email) {
+      this.id = id;
+      this.name = name;
+      this.email = email;
+      borrowedBooks = new ArrayList<>();
+  }
   
 }
