@@ -155,4 +155,15 @@ class User {
     public void setBorrowedBooks(ArrayList<Book> borrowedBooks) {
         this.borrowedBooks = borrowedBooks;
     }
+    
+    // Override toString() method to display user information
+    @Override
+    public String toString() {
+        return "User {" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", email='" + email + '\'' +
+                ", borrowedBooks=" + borrowedBooks +
+                '}';
+    } 
 }
