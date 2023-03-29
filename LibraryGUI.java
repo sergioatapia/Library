@@ -32,4 +32,18 @@ public class LibraryGUI {
     private JTextArea resultArea;    // area to display search results or error messages
     private JComboBox<Book> bookComboBox;  // dropdown to select a book
     private JComboBox<User> userComboBox;  // dropdown to select a user
+    
+    private ArrayList<Book> books;      // list of all books in the library
+    private ArrayList<Librarian> librarians;  // list of all librarians (for login purposes)
+    private ArrayList<User> users;      // list of all users (for borrowing purposes)
+
+    private Librarian currentLibrarian; // currently logged in librarian
+    private User currentUser;           // currently logged in user
+
+    public LibraryManagementSystemGUI() {
+        frame = new JFrame("Library Management System");
+        frame.setSize(800, 600);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setLayout(new BorderLayout());
+    }
 }
