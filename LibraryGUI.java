@@ -8,75 +8,104 @@ public class LibraryGUI {
     private JTextField inputField;      // Text input field for user to type book names
     private JTextArea outputArea;       // Text area to show messages and book list
 
-
     public LibraryGUI() {
-        library = new Library();        // Create a new Library instance
-        frame = new JFrame("Library Management System");  // Create window and title it
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // Close app when window closes
-        frame.setSize(400, 400);        // Set window size
+        // Initialize logic
+        library = new Library();
 
+        // Create window
+        frame = new JFrame("📚 Library Manager");
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setSize(500, 500);
+        frame.setLayout(new BorderLayout());
+        frame.getContentPane().setBackground(new Color(245, 245, 245)); // Light gray background
 
-        inputField = new JTextField();  // Where users type book titles
-        JButton addButton = new JButton("Add Book");      // Button to add book
-        JButton removeButton = new JButton("Remove Book");// Button to remove book
-        JButton listButton = new JButton("List Books");   // Button to show all books
+        // User input field
+        inputField = new JTextField();
+        inputField.setFont(new Font("Segoe UI", Font.PLAIN, 16));
+        inputField.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 
+        // Buttons
+        JButton addButton = createButton("Add Book");       // Blue themed
+        JButton removeButton = createButton("Remove Book");
+        JButton listButton = createButton("List Books");
 
-        outputArea = new JTextArea();         // Where feedback or book list is shown
-        outputArea.setEditable(false);        // User can't type here
-        JScrollPane scrollPane = new JScrollPane(outputArea);  // Scrollbar for text area
-
-
-        JPanel topPanel = new JPanel(new BorderLayout()); // Panel that contains input and buttons
-        topPanel.add(inputField, BorderLayout.CENTER);    // Text field takes center
-
-
-        JPanel buttonPanel = new JPanel(new GridLayout(1, 3)); // Horizontal layout for buttons
+        // Layout for buttons
+        JPanel buttonPanel = new JPanel(new GridLayout(1, 3, 10, 0));
+        buttonPanel.setBackground(new Color(245, 245, 245));
         buttonPanel.add(addButton);
         buttonPanel.add(removeButton);
         buttonPanel.add(listButton);
-        topPanel.add(buttonPanel, BorderLayout.SOUTH);    // Buttons go below input
+        buttonPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 
+        // Output area (shows messages and book list)
+        outputArea = new JTextArea();
+        outputArea.setEditable(false);
+        outputArea.setFont(new Font("Consolas", Font.PLAIN, 14));
+        outputArea.setBackground(Color.WHITE);
+        outputArea.setBorder(BorderFactory.createCompoundBorder(
+            BorderFactory.createLineBorder(new Color(200, 200, 200)),
+            BorderFactory.createEmptyBorder(10, 10, 10, 10)
+        ));
+        JScrollPane scrollPane = new JScrollPane(outputArea);
+        scrollPane.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 
-        frame.add(topPanel, BorderLayout.NORTH); // Top: input + buttons
-        frame.add(scrollPane, BorderLayout.CENTER); // Center: output area
+        // Top layout: input field + buttons
+        JPanel topPanel = new JPanel(new BorderLayout());
+        topPanel.setBackground(new Color(245, 245, 245));
+        topPanel.add(inputField, BorderLayout.NORTH);
+        topPanel.add(buttonPanel, BorderLayout.SOUTH);
 
+        // Add to main window
+        frame.add(topPanel, BorderLayout.NORTH);
+        frame.add(scrollPane, BorderLayout.CENTER);
 
-        // Button listeners
+        // Logic for Add Button
         addButton.addActionListener(e -> {
-            String book = inputField.getText().trim();    // Read and trim user input
+            String book = inputField.getText().trim();
             if (!book.isEmpty()) {
-                library.addBook(book);                    // Add book to list
-                inputField.setText("");                   // Clear input field
-                outputArea.setText("Added: " + book);     // Show confirmation
+                library.addBook(book);                        // Add book
+                inputField.setText("");                       // Clear field
+                outputArea.setText("✅ Added: " + book);      // Show confirmation
             }
         });
 
-
+        // Logic for Remove Button
         removeButton.addActionListener(e -> {
             String book = inputField.getText().trim();
             if (library.removeBook(book)) {
-                outputArea.setText("Removed: " + book);
+                outputArea.setText("❌ Removed: " + book);
             } else {
-                outputArea.setText("Book not found: " + book);
+                outputArea.setText("⚠️ Book not found: " + book);
             }
             inputField.setText("");
         });
 
-
+        // Logic for List Button
         listButton.addActionListener(e -> {
-            StringBuilder sb = new StringBuilder("Books in Library:\n");
+            StringBuilder sb = new StringBuilder("📖 Books in Library:\n\n");
             for (String book : library.getBooks()) {
-                sb.append("- ").append(book).append("\n");
+                sb.append("• ").append(book).append("\n");
             }
             outputArea.setText(sb.toString());
         });
 
-        frame.setVisible(true);   // Show the window on the screen
+        // Display the window
+        frame.setVisible(true);
     }
 
+    // Button styling method
+    private JButton createButton(String text) {
+        JButton button = new JButton(text);
+        button.setFont(new Font("Segoe UI", Font.BOLD, 14));
+        button.setBackground(new Color(66, 133, 244)); // Google blue
+        button.setForeground(Color.WHITE);
+        button.setFocusPainted(false);
+        button.setBorder(BorderFactory.createEmptyBorder(10, 0, 10, 0));
+        return button;
+    }
 
     public static void main(String[] args) {
-        SwingUtilities.invokeLater(LibraryGUI::new); // Launch GUI on the correct thread
+        // Launch GUI safely on the Event Dispatch Thread
+        SwingUtilities.invokeLater(LibraryGUI::new);
     }
 }
