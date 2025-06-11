@@ -1,12 +1,13 @@
-import javax.swing.*;
-import java.awt.*;
-import java.awt.event.*;
+import javax.swing.*;         // Gives us GUI components like JFrame, JButton, JTextField, etc.
+import java.awt.*;            // Needed for layout managers like BorderLayout, GridLayout
+import java.awt.event.*;      // Lets us respond to events like button clicks
 
 public class LibraryGUI {
-    private Library library;
-    private JFrame frame;
-    private JTextField inputField;
-    private JTextArea outputArea;
+    private Library library;            // Our backend logic to store books
+    private JFrame frame;               // Main application window
+    private JTextField inputField;      // Text input field for user to type book names
+    private JTextArea outputArea;       // Text area to show messages and book list
+
 
     public LibraryGUI() {
         library = new Library();
