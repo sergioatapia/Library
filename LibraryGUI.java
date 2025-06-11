@@ -31,24 +31,27 @@ public class LibraryGUI {
         topPanel.add(inputField, BorderLayout.CENTER);    // Text field takes center
 
 
-        JPanel buttonPanel = new JPanel(new GridLayout(1, 3));
+        JPanel buttonPanel = new JPanel(new GridLayout(1, 3)); // Horizontal layout for buttons
         buttonPanel.add(addButton);
         buttonPanel.add(removeButton);
         buttonPanel.add(listButton);
-        topPanel.add(buttonPanel, BorderLayout.SOUTH);
+        topPanel.add(buttonPanel, BorderLayout.SOUTH);    // Buttons go below input
 
-        frame.add(topPanel, BorderLayout.NORTH);
-        frame.add(scrollPane, BorderLayout.CENTER);
+
+        frame.add(topPanel, BorderLayout.NORTH); // Top: input + buttons
+        frame.add(scrollPane, BorderLayout.CENTER); // Center: output area
+
 
         // Button listeners
         addButton.addActionListener(e -> {
-            String book = inputField.getText().trim();
+            String book = inputField.getText().trim();    // Read and trim user input
             if (!book.isEmpty()) {
-                library.addBook(book);
-                inputField.setText("");
-                outputArea.setText("Added: " + book);
+                library.addBook(book);                    // Add book to list
+                inputField.setText("");                   // Clear input field
+                outputArea.setText("Added: " + book);     // Show confirmation
             }
         });
+
 
         removeButton.addActionListener(e -> {
             String book = inputField.getText().trim();
@@ -60,6 +63,7 @@ public class LibraryGUI {
             inputField.setText("");
         });
 
+
         listButton.addActionListener(e -> {
             StringBuilder sb = new StringBuilder("Books in Library:\n");
             for (String book : library.getBooks()) {
@@ -68,10 +72,11 @@ public class LibraryGUI {
             outputArea.setText(sb.toString());
         });
 
-        frame.setVisible(true);
+        frame.setVisible(true);   // Show the window on the screen
     }
 
+
     public static void main(String[] args) {
-        SwingUtilities.invokeLater(LibraryGUI::new);
+        SwingUtilities.invokeLater(LibraryGUI::new); // Launch GUI on the correct thread
     }
 }
