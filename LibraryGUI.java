@@ -10,22 +10,26 @@ public class LibraryGUI {
 
 
     public LibraryGUI() {
-        library = new Library();
-        frame = new JFrame("Library Management System");
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(400, 400);
+        library = new Library();        // Create a new Library instance
+        frame = new JFrame("Library Management System");  // Create window and title it
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // Close app when window closes
+        frame.setSize(400, 400);        // Set window size
 
-        inputField = new JTextField();
-        JButton addButton = new JButton("Add Book");
-        JButton removeButton = new JButton("Remove Book");
-        JButton listButton = new JButton("List Books");
 
-        outputArea = new JTextArea();
-        outputArea.setEditable(false);
-        JScrollPane scrollPane = new JScrollPane(outputArea);
+        inputField = new JTextField();  // Where users type book titles
+        JButton addButton = new JButton("Add Book");      // Button to add book
+        JButton removeButton = new JButton("Remove Book");// Button to remove book
+        JButton listButton = new JButton("List Books");   // Button to show all books
 
-        JPanel topPanel = new JPanel(new BorderLayout());
-        topPanel.add(inputField, BorderLayout.CENTER);
+
+        outputArea = new JTextArea();         // Where feedback or book list is shown
+        outputArea.setEditable(false);        // User can't type here
+        JScrollPane scrollPane = new JScrollPane(outputArea);  // Scrollbar for text area
+
+
+        JPanel topPanel = new JPanel(new BorderLayout()); // Panel that contains input and buttons
+        topPanel.add(inputField, BorderLayout.CENTER);    // Text field takes center
+
 
         JPanel buttonPanel = new JPanel(new GridLayout(1, 3));
         buttonPanel.add(addButton);
