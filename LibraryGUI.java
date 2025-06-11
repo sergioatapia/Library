@@ -1,49 +1,72 @@
-/* GUI for Library class
- * Author: Sergio Alvarez Tapia
- * Created: Mar, 2023
- */
-
-// GUI imports
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.util.ArrayList;
-
+import java.awt.event.*;
 
 public class LibraryGUI {
-    // GUI frames, buttons, panels, and text fields
+    private Library library;
     private JFrame frame;
-    private JPanel librarianPanel;   // panel for librarian section
-    private JPanel userPanel;        // panel for user section
-    private JPanel currentPanel;     // the panel currently displayed (either librarianPanel or userPanel)
-    private JButton librarianButton; // button to switch to librarian section
-    private JButton userButton;      // button to switch to user section
-    private JButton logoutButton;    // button to log out and return to main panel
-    private JButton addButton;       // button to add a book
-    private JButton removeButton;    // button to remove a book
-    private JButton updateButton;    // button to update a book
-    private JButton searchButton;    // button to search for books
-    private JButton borrowButton;    // button to borrow a book
-    private JTextField idField;      // field to enter book ID
-    private JTextField titleField;   // field to enter book title
-    private JTextField authorField;  // field to enter book author
-    private JTextField emailField;   // field to enter user email
-    private JTextArea resultArea;    // area to display search results or error messages
-    private JComboBox<Book> bookComboBox;  // dropdown to select a book
-    private JComboBox<User> userComboBox;  // dropdown to select a user
-    
-    private ArrayList<Book> books;      // list of all books in the library
-    private ArrayList<Librarian> librarians;  // list of all librarians (for login purposes)
-    private ArrayList<User> users;      // list of all users (for borrowing purposes)
+    private JTextField inputField;
+    private JTextArea outputArea;
 
-    private Librarian currentLibrarian; // currently logged in librarian
-    private User currentUser;           // currently logged in user
-
-    public LibraryManagementSystemGUI() {
+    public LibraryGUI() {
+        library = new Library();
         frame = new JFrame("Library Management System");
-        frame.setSize(800, 600);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setLayout(new BorderLayout());
+        frame.setSize(400, 400);
+
+        inputField = new JTextField();
+        JButton addButton = new JButton("Add Book");
+        JButton removeButton = new JButton("Remove Book");
+        JButton listButton = new JButton("List Books");
+
+        outputArea = new JTextArea();
+        outputArea.setEditable(false);
+        JScrollPane scrollPane = new JScrollPane(outputArea);
+
+        JPanel topPanel = new JPanel(new BorderLayout());
+        topPanel.add(inputField, BorderLayout.CENTER);
+
+        JPanel buttonPanel = new JPanel(new GridLayout(1, 3));
+        buttonPanel.add(addButton);
+        buttonPanel.add(removeButton);
+        buttonPanel.add(listButton);
+        topPanel.add(buttonPanel, BorderLayout.SOUTH);
+
+        frame.add(topPanel, BorderLayout.NORTH);
+        frame.add(scrollPane, BorderLayout.CENTER);
+
+        // Button listeners
+        addButton.addActionListener(e -> {
+            String book = inputField.getText().trim();
+            if (!book.isEmpty()) {
+                library.addBook(book);
+                inputField.setText("");
+                outputArea.setText("Added: " + book);
+            }
+        });
+
+        removeButton.addActionListener(e -> {
+            String book = inputField.getText().trim();
+            if (library.removeBook(book)) {
+                outputArea.setText("Removed: " + book);
+            } else {
+                outputArea.setText("Book not found: " + book);
+            }
+            inputField.setText("");
+        });
+
+        listButton.addActionListener(e -> {
+            StringBuilder sb = new StringBuilder("Books in Library:\n");
+            for (String book : library.getBooks()) {
+                sb.append("- ").append(book).append("\n");
+            }
+            outputArea.setText(sb.toString());
+        });
+
+        frame.setVisible(true);
+    }
+
+    public static void main(String[] args) {
+        SwingUtilities.invokeLater(LibraryGUI::new);
     }
 }
